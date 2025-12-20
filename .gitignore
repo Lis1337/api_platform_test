@@ -64,3 +64,7 @@
 ###< symfony/framework-bundle ###
 
 /docker/nginx/log/*
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###

@@ -18,13 +18,13 @@ ENV PATH="/usr/local/bin:${PATH}"
 
 # Создание рабочей директории
 WORKDIR /var/www/app
-COPY src .
+COPY . .
+
+# Установка зависимостей
+RUN composer install
 
 # Добавление юзера и прав
 RUN useradd -m -u 1000 dev-user
 RUN chown -R dev-user:dev-user /var/www/app
 
 USER dev-user
-
-# Команда по умолчанию
-CMD ["php-fpm"]
