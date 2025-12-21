@@ -15,7 +15,10 @@
         "symfony/yaml": "7.3.*"
     },
     "require-dev": {
-        "codeception/codeception": "^5.3"
+        "codeception/codeception": "^5.3",
+        "codeception/module-asserts": "^3.2",
+        "codeception/module-phpbrowser": "^3.0",
+        "codeception/module-symfony": "^3.8"
     },
     "config": {
         "allow-plugins": {

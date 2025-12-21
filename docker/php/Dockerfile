@@ -22,6 +22,9 @@ COPY . .
 
 # Установка зависимостей
 RUN composer install
+# Создание символической ссылки
+RUN mkdir -p bin && \
+    ln -sf ../vendor/bin/codecept ./bin/codecept
 
 # Добавление юзера и прав
 RUN useradd -m -u 1000 dev-user

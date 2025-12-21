@@ -11,3 +11,8 @@ build:
 
 apec:
 	docker exec -it app bash
+
+# make run-test TEST=path
+run-test:
+	@apec
+	php bin/codecept run ${TEST}
