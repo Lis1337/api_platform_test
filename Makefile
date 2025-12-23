@@ -16,3 +16,7 @@ apec:
 run-test:
 	@apec
 	php bin/codecept run ${TEST}
+
+test:
+	docker exec -i app php scripts/Test.php
+	@printf "\n"
