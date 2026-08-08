@@ -1,0 +1,7 @@
+.git
+.idea
+.claude
+var
+vendor
+docker/nginx/log
+tests/_output

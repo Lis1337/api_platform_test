@@ -1,12 +1,12 @@
-FROM php:8.4-fpm
+FROM php:8.5-fpm-bookworm
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
-    unzip
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
 
-# Установка композера
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && chmod +x /usr/local/bin/composer
+# Композер ставим из официального образа, а не curl | php
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 # Установка symfony cli
 RUN curl -sS https://get.symfony.com/cli/installer | bash \
@@ -16,18 +16,26 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash \
 # Установка PATH глобально
 ENV PATH="/usr/local/bin:${PATH}"
 
-# Создание рабочей директории
-WORKDIR /var/www/app
-COPY . .
-
-# Установка зависимостей
-RUN composer install
-# Создание символической ссылки
-RUN mkdir -p bin && \
-    ln -sf ../vendor/bin/codecept ./bin/codecept
-
-# Добавление юзера и прав
+# Добавление юзера
 RUN useradd -m -u 1000 dev-user
-RUN chown -R dev-user:dev-user /var/www/app
 
+WORKDIR /var/www/app
+RUN chown dev-user:dev-user /var/www/app
+
+# Сначала только манифесты composer — слой с зависимостями
+# пересобирается лишь при изменении composer.json/lock,
+# а не при каждом изменении исходников
+COPY --chown=dev-user:dev-user composer.json composer.lock ./
 USER dev-user
+RUN composer install --no-scripts --no-autoloader --no-interaction --no-progress
+
+COPY --chown=dev-user:dev-user . .
+RUN composer dump-autoload --optimize
+
+USER root
+COPY docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+USER dev-user
+
+ENTRYPOINT ["entrypoint.sh"]
+CMD ["php-fpm"]
