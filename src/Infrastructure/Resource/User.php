@@ -6,12 +6,14 @@ namespace App\Infrastructure\Resource;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\OpenApi\Model\Operation as OpenApiOperation;
 use App\Domain\Exception\UserNotFoundException;
 use App\Infrastructure\Processor\UserCreateProcessor;
 use App\Infrastructure\Processor\UserDeleteProcessor;
+use App\Infrastructure\Provider\UserCollectionProvider;
 use App\Infrastructure\Provider\UserProvider;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -34,6 +36,20 @@ use Symfony\Component\Validator\Constraints as Assert;
             description: 'Получить пользователя по id',
             normalizationContext: ['groups' => [self::USER_OUTPUT]],
             provider: UserProvider::class,
+        ),
+        new GetCollection(
+            status: 200,
+            openapi: new OpenApiOperation(
+                summary: 'Получить список пользователей',
+                description: 'Получить список пользователей с пагинацией',
+            ),
+            description: 'Получить список пользователей с пагинацией',
+            normalizationContext: ['groups' => [self::USER_OUTPUT]],
+            paginationEnabled: true,
+            paginationClientItemsPerPage: true,
+            paginationItemsPerPage: 10,
+            paginationMaximumItemsPerPage: 50,
+            provider: UserCollectionProvider::class,
         ),
         new Post(
             status: 201,
