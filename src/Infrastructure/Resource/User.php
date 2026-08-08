@@ -44,6 +44,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             description: 'Создать пользователя',
             normalizationContext: ['groups' => [self::USER_OUTPUT]],
             denormalizationContext: ['groups' => [self::USER_INPUT]],
+            validationContext: ['groups' => [self::USER_INPUT]],
             processor: UserCreateProcessor::class,
         ),
         new Delete(
