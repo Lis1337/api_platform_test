@@ -3,9 +3,11 @@ declare(strict_types = 1);
 namespace App\Infrastructure\Repository;
 
 use App\Domain\Entity\User;
+use App\Domain\Exception\UserNotFoundException;
 use App\Domain\Repository\UserRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -16,9 +18,9 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
         parent::__construct($registry, User::class);
     }
 
-    public function finById(int $id): ?User
+    public function findById(Ulid $id): User
     {
-        return $this->find($id);
+        return $this->find($id) ?? throw new UserNotFoundException();
     }
 
     public function save(User $user): void

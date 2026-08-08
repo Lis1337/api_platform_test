@@ -3,10 +3,15 @@ declare(strict_types = 1);
 namespace App\Domain\Repository;
 
 use App\Domain\Entity\User;
+use App\Domain\Exception\UserNotFoundException;
+use Symfony\Component\Uid\Ulid;
 
 interface UserRepositoryInterface
 {
-    public function finById(int $id): ?User;
+    /**
+     * @throws UserNotFoundException
+     */
+    public function findById(Ulid $id): User;
 
     public function save(User $user): void;
 

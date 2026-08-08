@@ -1,0 +1,36 @@
+stof_doctrine_extensions:
+    default_locale: en
+    orm:
+        default:
+            # Автоматически проставляет created_at/updated_at через #[Gedmo\Timestampable]
+            timestampable: true
+
+            # Хранит переводы полей сущности на разные языки через #[Gedmo\Translatable]
+            translatable: false
+
+            # Проставляет created_by/updated_by (текущего пользователя) через #[Gedmo\Blameable]
+            blameable: false
+
+            # Генерирует URL-slug из других полей через #[Gedmo\Slug]
+            sluggable: false
+
+            # Хранит древовидные структуры (nested set / materialized path) через #[Gedmo\Tree]
+            tree: false
+
+            # Пишет журнал изменений сущности (кто/когда/что поменял) через #[Gedmo\Loggable]
+            loggable: false
+
+            # Проставляет IP-адрес запроса, инициировавшего изменение, через #[Gedmo\IpTraceable]
+            ip_traceable: false
+
+            # Управляет позицией записи в списке через #[Gedmo\SortablePosition]/#[Gedmo\SortableGroup]
+            sortable: false
+
+            # "Мягкое" удаление: помечает запись удалённой вместо реального DELETE через #[Gedmo\SoftDeleteable]
+            softdeleteable: false
+
+            # Управляет загруженными файлами, привязанными к сущности, через #[Gedmo\Uploadable]
+            uploadable: false
+
+            # Проверяет ссылочную целостность для документо-ориентированных связей (в основном для ODM)
+            reference_integrity: false

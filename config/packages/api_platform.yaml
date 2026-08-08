@@ -2,6 +2,9 @@ api_platform:
     title: Hello API Platform
     version: 1.0.0
     enable_swagger_ui: true
+    formats:
+        json: ['application/json']
+        jsonld: ['application/ld+json']
     mapping:
         paths:
             - '%kernel.project_dir%/src/Infrastructure/Resource'
