@@ -1,0 +1,11 @@
+api_platform:
+    title: Hello API Platform
+    version: 1.0.0
+    enable_swagger_ui: true
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Infrastructure/Resource'
+    defaults:
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']

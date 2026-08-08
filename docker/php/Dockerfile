@@ -3,6 +3,8 @@ FROM php:8.5-fpm-bookworm
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     unzip \
+    libicu-dev \
+    && docker-php-ext-install pdo_mysql intl \
     && rm -rf /var/lib/apt/lists/*
 
 # Композер ставим из официального образа, а не curl | php
