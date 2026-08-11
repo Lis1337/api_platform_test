@@ -16,6 +16,8 @@ services:
       MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
     env_file:
       - .env
+    volumes:
+      - db_data:/var/lib/mysql
     networks:
       - app_db
   nginx:
@@ -35,3 +37,6 @@ services:
 networks:
   app_db:
     external: false
+
+volumes:
+  db_data:
