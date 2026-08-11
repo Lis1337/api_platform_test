@@ -23,6 +23,16 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
         return $this->find($id) ?? throw new UserNotFoundException();
     }
 
+    public function findPage(int $offset, int $limit): array
+    {
+        return $this->findBy([], null, $limit, $offset);
+    }
+
+    public function countAll(): int
+    {
+        return $this->count([]);
+    }
+
     public function save(User $user): void
     {
         $this->getEntityManager()->persist($user);

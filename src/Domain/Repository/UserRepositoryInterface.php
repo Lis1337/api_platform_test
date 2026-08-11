@@ -13,6 +13,13 @@ interface UserRepositoryInterface
      */
     public function findById(Ulid $id): User;
 
+    /**
+     * @return User[]
+     */
+    public function findPage(int $offset, int $limit): array;
+
+    public function countAll(): int;
+
     public function save(User $user): void;
 
     public function remove(User $user): void;
