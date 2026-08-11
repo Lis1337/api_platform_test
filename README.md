@@ -1,2 +1,2 @@
 # api_platform_test
-Project for test api platform framework
+Пет проект для демонстрации фреймворка API platform
