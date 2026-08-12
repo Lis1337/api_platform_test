@@ -18,3 +18,13 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+# Пишем каждый SQL-запрос в лог. DoctrineBundle 3 сам этого не делает:
+# его штатный debug-middleware складывает запросы в профайлер, а не в PSR-логгер.
+when@dev:
+    services:
+        app.doctrine.sql_logging_middleware:
+            class: Doctrine\DBAL\Logging\Middleware
+            arguments: ['@logger']
+            tags:
+                - { name: doctrine.middleware, connection: default, priority: 5 }
